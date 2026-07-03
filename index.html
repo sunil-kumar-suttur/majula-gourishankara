@@ -74,13 +74,13 @@
       }
 
       .lang-toggle {
-        position: fixed;
-        top: 12px;
-        right: 3vw;
-        z-index: 110;
+        position: absolute;
+        top: 84px;
+        right: 22px;
+        z-index: 5;
         display: flex;
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(231, 210, 160, 0.4);
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(231, 210, 160, 0.5);
         border-radius: 20px;
         overflow: hidden;
       }
@@ -472,14 +472,13 @@
           gap: 14px;
           overflow-x: auto;
           justify-content: flex-start;
-          padding-right: 90px;
         }
         .venue-card .venue-photo {
           height: 180px;
         }
         .lang-toggle {
-          top: 10px;
-          right: 2vw;
+          top: 74px;
+          right: 14px;
         }
         .lang-toggle button {
           padding: 7px 10px;
@@ -489,11 +488,6 @@
     </style>
   </head>
   <body>
-    <div class="lang-toggle">
-      <button id="lang-en" onclick="setLanguage('en')" class="active">EN</button>
-      <button id="lang-kn" onclick="setLanguage('kn')">ಕನ್ನಡ</button>
-    </div>
-
     <nav id="nav">
       <button data-target="home" onclick="goTo('home')" class="active" data-i18n-en="Home" data-i18n-kn="ಮುಖಪುಟ">
         Home
@@ -507,6 +501,10 @@
     </nav>
 
     <section class="hero" id="home">
+      <div class="lang-toggle">
+        <button id="lang-en" onclick="setLanguage('en')" class="active">EN</button>
+        <button id="lang-kn" onclick="setLanguage('kn')">ಕನ್ನಡ</button>
+      </div>
       <div class="eyebrow" data-i18n-en="Together with their families" data-i18n-kn="ಅವರ ಕುಟುಂಬಗಳ ಸಮ್ಮುಖದಲ್ಲಿ">Together with their families</div>
       <h1><span data-i18n-en="Manjula" data-i18n-kn="ಮಂಜುಳ">Manjula</span><span class="amp">&amp;</span><span data-i18n-en="Gourishankara" data-i18n-kn="ಗೌರಿಶಂಕರ">Gourishankara</span></h1>
       <div class="sub" data-i18n-en="04 July 2026 · MYSURU" data-i18n-kn="04 ಜುಲೈ 2026 · ಮೈಸೂರು">04 July 2026 · MYSURU</div>
@@ -668,7 +666,7 @@
       >
         <img
           class="venue-photo"
-          src="venue.png"
+          src="venue.jpg"
           alt="Blue Ocean Kalyana Mantapa venue building"
         />
         <div class="venue-body">
