@@ -6,7 +6,7 @@
     <title>Manjula & Gourishankara — Wedding Invitation</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Karla:wght@400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Karla:wght@400;500;700&family=Noto+Sans+Kannada:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -27,7 +27,7 @@
         scroll-behavior: smooth;
       }
       body {
-        font-family: "Karla", sans-serif;
+        font-family: "Karla", "Noto Sans Kannada", sans-serif;
         background: var(--cream);
         color: var(--ink);
         overflow-x: hidden;
@@ -36,7 +36,7 @@
       h2,
       h3,
       .display {
-        font-family: "Cormorant Garamond", serif;
+        font-family: "Cormorant Garamond", "Noto Sans Kannada", serif;
       }
 
       nav {
@@ -56,7 +56,7 @@
         background: none;
         border: none;
         color: var(--gold-soft);
-        font-family: "Karla", sans-serif;
+        font-family: "Karla", "Noto Sans Kannada", sans-serif;
         font-size: 12px;
         letter-spacing: 1.5px;
         text-transform: uppercase;
@@ -71,6 +71,36 @@
       nav button.active {
         color: var(--cream);
         border-bottom-color: var(--gold);
+      }
+
+      .lang-toggle {
+        position: fixed;
+        top: 12px;
+        right: 3vw;
+        z-index: 110;
+        display: flex;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(231, 210, 160, 0.4);
+        border-radius: 20px;
+        overflow: hidden;
+      }
+      .lang-toggle button {
+        background: none;
+        border: none;
+        color: var(--gold-soft);
+        font-family: "Karla", "Noto Sans Kannada", sans-serif;
+        font-size: 11px;
+        letter-spacing: 0.5px;
+        padding: 9px 16px;
+        cursor: pointer;
+        transition:
+          background 0.25s ease,
+          color 0.25s ease;
+      }
+      .lang-toggle button.active {
+        background: var(--gold);
+        color: var(--maroon-deep);
+        font-weight: 700;
       }
 
       .hero {
@@ -442,35 +472,49 @@
           gap: 14px;
           overflow-x: auto;
           justify-content: flex-start;
+          padding-right: 90px;
         }
         .venue-card .venue-photo {
           height: 180px;
+        }
+        .lang-toggle {
+          top: 10px;
+          right: 2vw;
+        }
+        .lang-toggle button {
+          padding: 7px 10px;
+          font-size: 10px;
         }
       }
     </style>
   </head>
   <body>
+    <div class="lang-toggle">
+      <button id="lang-en" onclick="setLanguage('en')" class="active">EN</button>
+      <button id="lang-kn" onclick="setLanguage('kn')">ಕನ್ನಡ</button>
+    </div>
+
     <nav id="nav">
-      <button data-target="home" onclick="goTo('home')" class="active">
+      <button data-target="home" onclick="goTo('home')" class="active" data-i18n-en="Home" data-i18n-kn="ಮುಖಪುಟ">
         Home
       </button>
-      <button data-target="countdown" onclick="goTo('countdown')">
+      <button data-target="countdown" onclick="goTo('countdown')" data-i18n-en="Countdown" data-i18n-kn="ಕ್ಷಣಗಣನೆ">
         Countdown
       </button>
-      <button data-target="couple" onclick="goTo('couple')">Couple</button>
-      <button data-target="events" onclick="goTo('events')">Events</button>
-      <button data-target="venue" onclick="goTo('venue')">Venue</button>
+      <button data-target="couple" onclick="goTo('couple')" data-i18n-en="Couple" data-i18n-kn="ದಂಪತಿಗಳು">Couple</button>
+      <button data-target="events" onclick="goTo('events')" data-i18n-en="Events" data-i18n-kn="ಕಾರ್ಯಕ್ರಮಗಳು">Events</button>
+      <button data-target="venue" onclick="goTo('venue')" data-i18n-en="Venue" data-i18n-kn="ಸ್ಥಳ">Venue</button>
     </nav>
 
     <section class="hero" id="home">
-      <div class="eyebrow">Together with their families</div>
-      <h1>Manjula<span class="amp">&amp;</span>Gourishankara</h1>
-      <div class="sub">04 July 2026 · MYSURU</div>
+      <div class="eyebrow" data-i18n-en="Together with their families" data-i18n-kn="ಅವರ ಕುಟುಂಬಗಳ ಸಮ್ಮುಖದಲ್ಲಿ">Together with their families</div>
+      <h1><span data-i18n-en="Manjula" data-i18n-kn="ಮಂಜುಳ">Manjula</span><span class="amp">&amp;</span><span data-i18n-en="Gourishankara" data-i18n-kn="ಗೌರಿಶಂಕರ">Gourishankara</span></h1>
+      <div class="sub" data-i18n-en="04 July 2026 · MYSURU" data-i18n-kn="04 ಜುಲೈ 2026 · ಮೈಸೂರು">04 July 2026 · MYSURU</div>
       <div class="navhint">
-        <button onclick="goTo('countdown')">Countdown</button>
-        <button onclick="goTo('couple')">The couple</button>
-        <button onclick="goTo('events')">Events</button>
-        <button onclick="goTo('venue')">Venue</button>
+        <button onclick="goTo('countdown')" data-i18n-en="Countdown" data-i18n-kn="ಕ್ಷಣಗಣನೆ">Countdown</button>
+        <button onclick="goTo('couple')" data-i18n-en="The couple" data-i18n-kn="ದಂಪತಿಗಳು">The couple</button>
+        <button onclick="goTo('events')" data-i18n-en="Events" data-i18n-kn="ಕಾರ್ಯಕ್ರಮಗಳು">Events</button>
+        <button onclick="goTo('venue')" data-i18n-en="Venue" data-i18n-kn="ಸ್ಥಳ">Venue</button>
       </div>
     </section>
 
@@ -484,23 +528,23 @@
     </div>
 
     <section id="countdown">
-      <div class="label">Save the date</div>
-      <h2 class="heading">Counting down to forever</h2>
+      <div class="label" data-i18n-en="Save the date" data-i18n-kn="ದಿನಾಂಕವನ್ನು ನೆನಪಿಡಿ">Save the date</div>
+      <h2 class="heading" data-i18n-en="Counting down to forever" data-i18n-kn="ಶಾಶ್ವತತೆಯೆಡೆಗೆ ಎಣಿಕೆ">Counting down to forever</h2>
       <div class="countdown">
         <div class="cbox">
-          <span class="num" id="cd-days">00</span><span class="unit">Days</span>
+          <span class="num" id="cd-days">00</span><span class="unit" data-i18n-en="Days" data-i18n-kn="ದಿನಗಳು">Days</span>
         </div>
         <div class="cbox">
           <span class="num" id="cd-hours">00</span
-          ><span class="unit">Hours</span>
+          ><span class="unit" data-i18n-en="Hours" data-i18n-kn="ಗಂಟೆಗಳು">Hours</span>
         </div>
         <div class="cbox">
           <span class="num" id="cd-mins">00</span
-          ><span class="unit">Minutes</span>
+          ><span class="unit" data-i18n-en="Minutes" data-i18n-kn="ನಿಮಿಷಗಳು">Minutes</span>
         </div>
         <div class="cbox">
           <span class="num" id="cd-secs">00</span
-          ><span class="unit">Seconds</span>
+          ><span class="unit" data-i18n-en="Seconds" data-i18n-kn="ಸೆಕೆಂಡುಗಳು">Seconds</span>
         </div>
       </div>
     </section>
@@ -515,8 +559,8 @@
     </div>
 
     <section id="couple">
-      <div class="label">Our story</div>
-      <h2 class="heading">The couple</h2>
+      <div class="label" data-i18n-en="Our story" data-i18n-kn="ನಮ್ಮ ಕಥೆ">Our story</div>
+      <h2 class="heading" data-i18n-en="The couple" data-i18n-kn="ದಂಪತಿಗಳು">The couple</h2>
       <div class="couple-grid">
         <div
           class="person"
@@ -525,9 +569,9 @@
           "
         >
           <div class="ring">M</div>
-          <h3>Manjula M</h3>
-          <div class="role">The bride</div>
-          <p>
+          <h3 data-i18n-en="Manjula M" data-i18n-kn="ಮಂಜುಳ ಎಂ">Manjula M</h3>
+          <div class="role" data-i18n-en="The bride" data-i18n-kn="ವಧು">The bride</div>
+          <p data-i18n-en="Through every challenge and every success, I'll be there to take care of him." data-i18n-kn="ಪ್ರತಿ ಸವಾಲಿನಲ್ಲೂ ಮತ್ತು ಪ್ರತಿ ಯಶಸ್ಸಿನಲ್ಲೂ, ನಾನು ಅವನನ್ನು ಪೋಷಿಸಲು ಜೊತೆಗಿರುತ್ತೇನೆ.">
             Through every challenge and every success, I'll be there to take
             care of him.
           </p>
@@ -541,9 +585,9 @@
           "
         >
           <div class="ring">G</div>
-          <h3>Gourishankara S J</h3>
-          <div class="role">The groom</div>
-          <p>
+          <h3 data-i18n-en="Gourishankara S J" data-i18n-kn="ಗೌರಿಶಂಕರ ಎಸ್ ಜೆ">Gourishankara S J</h3>
+          <div class="role" data-i18n-en="The groom" data-i18n-kn="ವರ">The groom</div>
+          <p data-i18n-en="Promises to stand by her side, cherish every moment, and take care of her forever with all his heart." data-i18n-kn="ಆಕೆಯ ಪಕ್ಕದಲ್ಲಿ ನಿಂತು, ಪ್ರತಿ ಕ್ಷಣವನ್ನು ಪ್ರೀತಿಸುತ್ತಾ, ತನ್ನ ಪೂರ್ಣ ಹೃದಯದಿಂದ ಆಕೆಯನ್ನು ಶಾಶ್ವತವಾಗಿ ಪೋಷಿಸುವ ಭರವಸೆ.">
             Promises to stand by her side, cherish every moment, and take care
             of her forever with all his heart.
           </p>
@@ -561,8 +605,8 @@
     </div>
 
     <section id="events">
-      <div class="label">Event details</div>
-      <h2 class="heading">Where to be, and when</h2>
+      <div class="label" data-i18n-en="Event details" data-i18n-kn="ಕಾರ್ಯಕ್ರಮದ ವಿವರಗಳು">Event details</div>
+      <h2 class="heading" data-i18n-en="Where to be, and when" data-i18n-kn="ಎಲ್ಲಿ ಮತ್ತು ಯಾವಾಗ">Where to be, and when</h2>
 
       <div class="timeline">
         <!-- Reception -->
@@ -576,10 +620,10 @@
           "
         >
           <div class="icon">✦</div>
-          <h3>Reception</h3>
-          <p>Blue Ocean Convention Hall, Mysuru</p>
-          <span class="time">04 Jul · 6:30 PM</span>
-          <span class="go">View Venue ↗</span>
+          <h3 data-i18n-en="Reception" data-i18n-kn="ಸ್ವಾಗತ ಸಮಾರಂಭ">Reception</h3>
+          <p data-i18n-en="Blue Ocean Convention Hall, Mysuru" data-i18n-kn="ಬ್ಲೂ ಓಷನ್ ಕನ್ವೆನ್ಷನ್ ಹಾಲ್, ಮೈಸೂರು">Blue Ocean Convention Hall, Mysuru</p>
+          <span class="time" data-i18n-en="04 Jul · 6:30 PM" data-i18n-kn="04 ಜುಲೈ · ಸಂಜೆ 6:30">04 Jul · 6:30 PM</span>
+          <span class="go" data-i18n-en="View Venue ↗" data-i18n-kn="ಸ್ಥಳ ವೀಕ್ಷಿಸಿ ↗">View Venue ↗</span>
         </div>
 
         <!-- Wedding Ceremony -->
@@ -593,10 +637,10 @@
           "
         >
           <div class="icon">✺</div>
-          <h3>Wedding Ceremony</h3>
-          <p>Blue Ocean Convention Hall, Mysuru</p>
-          <span class="time">05 Jul · 9:50 AM</span>
-          <span class="go">Get Directions ↗</span>
+          <h3 data-i18n-en="Wedding Ceremony" data-i18n-kn="ವಿವಾಹ ಸಮಾರಂಭ">Wedding Ceremony</h3>
+          <p data-i18n-en="Blue Ocean Convention Hall, Mysuru" data-i18n-kn="ಬ್ಲೂ ಓಷನ್ ಕನ್ವೆನ್ಷನ್ ಹಾಲ್, ಮೈಸೂರು">Blue Ocean Convention Hall, Mysuru</p>
+          <span class="time" data-i18n-en="05 Jul · 9:50 AM" data-i18n-kn="05 ಜುಲೈ · ಬೆಳಿಗ್ಗೆ 9:50">05 Jul · 9:50 AM</span>
+          <span class="go" data-i18n-en="Get Directions ↗" data-i18n-kn="ದಿಕ್ಕು ಪಡೆಯಿರಿ ↗">Get Directions ↗</span>
         </div>
       </div>
     </section>
@@ -611,8 +655,8 @@
     </div>
 
     <section id="venue">
-      <div class="label">Main venue</div>
-      <h2 class="heading">Join us here</h2>
+      <div class="label" data-i18n-en="Main venue" data-i18n-kn="ಮುಖ್ಯ ಸ್ಥಳ">Main venue</div>
+      <h2 class="heading" data-i18n-en="Join us here" data-i18n-kn="ಇಲ್ಲಿ ನಮ್ಮೊಂದಿಗೆ ಸೇರಿ">Join us here</h2>
       <div
         class="venue-card"
         onclick="
@@ -624,14 +668,14 @@
       >
         <img
           class="venue-photo"
-          src="venue.png"
+          src="venue.jpg"
           alt="Blue Ocean Kalyana Mantapa venue building"
         />
         <div class="venue-body">
           <div class="icon">⌖</div>
-          <h3>Blue Ocean Convension Hall</h3>
-          <p>Varkood gate T Narasipura, main road</p>
-          <span class="go">Open in Google Maps ↗</span>
+          <h3 data-i18n-en="Blue Ocean Convension Hall" data-i18n-kn="ಬ್ಲೂ ಓಷನ್ ಕಲ್ಯಾಣ ಮಂಟಪ">Blue Ocean Convension Hall</h3>
+          <p data-i18n-en="Varkood gate T Narasipura, main road" data-i18n-kn="ವರ್ಕೂಡ್ ಗೇಟ್, ಟಿ ನರಸೀಪುರ ಮುಖ್ಯ ರಸ್ತೆ">Varkood gate T Narasipura, main road</p>
+          <span class="go" data-i18n-en="Open in Google Maps ↗" data-i18n-kn="ಗೂಗಲ್ ಮ್ಯಾಪ್ಸ್‌ನಲ್ಲಿ ತೆರೆಯಿರಿ ↗">Open in Google Maps ↗</span>
         </div>
       </div>
     </section>
@@ -649,7 +693,7 @@
         font-size: 14px;
       "
     >
-      📞 For Website Enquiries: 9071330429
+      📞 <span data-i18n-en="For Wedding Website Assistance: 8095714424" data-i18n-kn="ವೆಬ್‌ಸೈಟ್ ಸಹಾಯಕ್ಕಾಗಿ: 8095714424">For Wedding Website Assistance: 8095714424</span>
     </a>
   </div>
 </footer>
@@ -711,6 +755,15 @@
       }
       updateCountdown();
       setInterval(updateCountdown, 1000);
+
+      function setLanguage(lang) {
+        document.querySelectorAll("[data-i18n-en]").forEach(function (el) {
+          el.textContent = lang === "kn" ? el.dataset.i18nKn : el.dataset.i18nEn;
+        });
+        document.getElementById("lang-en").classList.toggle("active", lang === "en");
+        document.getElementById("lang-kn").classList.toggle("active", lang === "kn");
+        document.documentElement.setAttribute("lang", lang);
+      }
     </script>
   </body>
 </html>
