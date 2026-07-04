@@ -11,12 +11,14 @@
     />
     <style>
       :root {
-        --maroon: #5e1b2a;
-        --maroon-deep: #3e101b;
-        --gold: #c8a24a;
-        --gold-soft: #e7d2a0;
-        --cream: #fbf4e6;
-        --ink: #2b1b12;
+        --teal-deep: #071f21;
+        --teal: #0e3638;
+        --teal-mid: #1b5b5c;
+        --gold: #cda45e;
+        --gold-soft: #ecd8ab;
+        --blush: #f2ddca;
+        --cream: #faf5ea;
+        --ink: #202420;
       }
       * {
         margin: 0;
@@ -39,6 +41,18 @@
         font-family: "Cormorant Garamond", "Noto Sans Kannada", serif;
       }
 
+      /* ---------- reveal on scroll ---------- */
+      .reveal {
+        opacity: 0;
+        transform: translateY(26px);
+        transition: opacity 0.9s cubic-bezier(.2,.7,.2,1), transform 0.9s cubic-bezier(.2,.7,.2,1);
+      }
+      .reveal.in { opacity: 1; transform: translateY(0); }
+      .reveal.d1 { transition-delay: 0.08s; }
+      .reveal.d2 { transition-delay: 0.16s; }
+      .reveal.d3 { transition-delay: 0.24s; }
+      .reveal.d4 { transition-delay: 0.32s; }
+
       nav {
         position: fixed;
         top: 0;
@@ -49,10 +63,13 @@
         justify-content: center;
         gap: clamp(10px, 3vw, 36px);
         padding: 16px 4vw;
-        background: rgba(62, 16, 27, 0.92);
+        background: rgba(7, 31, 33, 0.92);
         backdrop-filter: blur(6px);
+        transition: box-shadow 0.3s ease;
       }
+      nav.scrolled { box-shadow: 0 2px 22px rgba(0,0,0,0.18); }
       nav button {
+        position: relative;
         background: none;
         border: none;
         color: var(--gold-soft);
@@ -79,8 +96,8 @@
         right: 22px;
         z-index: 5;
         display: flex;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(231, 210, 160, 0.5);
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(236, 216, 171, 0.5);
         border-radius: 20px;
         overflow: hidden;
       }
@@ -99,10 +116,11 @@
       }
       .lang-toggle button.active {
         background: var(--gold);
-        color: var(--maroon-deep);
+        color: var(--teal-deep);
         font-weight: 700;
       }
 
+      /* ---------- HERO ---------- */
       .hero {
         min-height: 100vh;
         display: flex;
@@ -112,31 +130,50 @@
         text-align: center;
         position: relative;
         background: radial-gradient(
-          circle at 50% 20%,
-          var(--maroon) 0%,
-          var(--maroon-deep) 70%
+          circle at 50% 25%,
+          var(--teal-mid) 0%,
+          var(--teal) 45%,
+          var(--teal-deep) 85%
         );
         color: var(--cream);
         padding: 3rem 1.5rem;
         overflow: hidden;
       }
-      .hero::before,
-      .hero::after {
-        content: "";
+      /* expanding wave rings - nods to "Blue Ocean" venue */
+      .wave-ring {
         position: absolute;
-        width: 140%;
-        height: 140%;
-        border: 1px solid rgba(200, 162, 74, 0.25);
+        border: 1px solid rgba(205, 164, 94, 0.35);
         border-radius: 50%;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        animation: waveOut 6s ease-out infinite;
+        opacity: 0;
       }
-      .hero::after {
-        width: 170%;
-        height: 170%;
-        border-color: rgba(200, 162, 74, 0.12);
+      .wave-ring.r1 { width: 200px; height: 200px; animation-delay: 0s; }
+      .wave-ring.r2 { width: 200px; height: 200px; animation-delay: 2s; }
+      .wave-ring.r3 { width: 200px; height: 200px; animation-delay: 4s; }
+      @keyframes waveOut {
+        0% { width: 160px; height: 160px; opacity: 0.55; }
+        100% { width: 1400px; height: 1400px; opacity: 0; }
       }
+
+      /* drifting golden particles */
+      .particle {
+        position: absolute;
+        bottom: -20px;
+        border-radius: 50%;
+        background: radial-gradient(circle, var(--gold-soft), transparent 70%);
+        opacity: 0.7;
+        animation: drift linear infinite;
+      }
+      @keyframes drift {
+        0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+        10% { opacity: 0.8; }
+        90% { opacity: 0.5; }
+        100% { transform: translateY(-115vh) translateX(var(--drift-x, 20px)) scale(0.6); opacity: 0; }
+      }
+
       .eyebrow {
         letter-spacing: 4px;
         font-size: 12px;
@@ -162,6 +199,12 @@
         font-size: clamp(28px, 5vw, 46px);
         color: var(--gold);
         margin: 6px 0;
+        animation: swayAmp 4.5s ease-in-out infinite;
+        display: inline-block;
+      }
+      @keyframes swayAmp {
+        0%, 100% { transform: rotate(-4deg); }
+        50% { transform: rotate(4deg); }
       }
       .hero .sub {
         margin-top: 22px;
@@ -174,14 +217,8 @@
         animation-delay: 0.3s;
       }
       @keyframes fadeUp {
-        from {
-          opacity: 0;
-          transform: translateY(18px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
+        from { opacity: 0; transform: translateY(18px); }
+        to { opacity: 1; transform: translateY(0); }
       }
       .hero .navhint {
         margin-top: 40px;
@@ -190,10 +227,13 @@
         z-index: 2;
         flex-wrap: wrap;
         justify-content: center;
+        opacity: 0;
+        animation: fadeUp 1.3s ease forwards;
+        animation-delay: 0.45s;
       }
       .hero .navhint button {
         background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(231, 210, 160, 0.35);
+        border: 1px solid rgba(236, 216, 171, 0.35);
         color: var(--gold-soft);
         padding: 9px 18px;
         border-radius: 20px;
@@ -201,10 +241,11 @@
         letter-spacing: 1px;
         text-transform: uppercase;
         cursor: pointer;
-        transition: background 0.25s ease;
+        transition: background 0.25s ease, transform 0.3s ease;
       }
       .hero .navhint button:hover {
         background: rgba(255, 255, 255, 0.14);
+        transform: translateY(-2px);
       }
 
       .divider {
@@ -223,7 +264,9 @@
         width: 22px;
         height: 22px;
         fill: var(--gold);
+        animation: spinSlow 12s linear infinite;
       }
+      @keyframes spinSlow { to { transform: rotate(360deg); } }
 
       section {
         padding: 90px 6vw 80px;
@@ -236,15 +279,15 @@
         letter-spacing: 3px;
         font-size: 12px;
         text-transform: uppercase;
-        color: var(--maroon);
-        opacity: 0.7;
+        color: var(--teal-mid);
+        opacity: 0.75;
         margin-bottom: 8px;
       }
       .heading {
         text-align: center;
         font-size: clamp(30px, 5vw, 44px);
         font-weight: 500;
-        color: var(--maroon-deep);
+        color: var(--teal-deep);
         margin-bottom: 28px;
       }
 
@@ -257,24 +300,38 @@
       }
       .cbox {
         background: #fff;
-        border: 1px solid rgba(94, 27, 42, 0.12);
+        border: 1px solid rgba(14, 54, 56, 0.1);
         border-radius: 8px;
         padding: 24px 22px;
         text-align: center;
         min-width: 90px;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .cbox:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 14px 28px rgba(14, 54, 56, 0.12);
       }
       .cbox .num {
         font-family: "Cormorant Garamond", serif;
         font-size: 42px;
         font-weight: 600;
-        color: var(--maroon-deep);
+        color: var(--teal-deep);
         line-height: 1;
+        display: inline-block;
+        transition: transform 0.35s ease;
+      }
+      .cbox .num.tick { animation: tickPulse 0.4s ease; }
+      @keyframes tickPulse {
+        0% { transform: translateY(-8px); opacity: 0.4; }
+        100% { transform: translateY(0); opacity: 1; }
       }
       .cbox .unit {
         font-size: 11px;
         letter-spacing: 1.5px;
         text-transform: uppercase;
-        color: var(--maroon);
+        color: var(--teal-mid);
         margin-top: 6px;
         display: block;
       }
@@ -287,18 +344,18 @@
       }
       .person {
         background: #fff;
-        border: 1px solid rgba(94, 27, 42, 0.12);
+        border: 1px solid rgba(14, 54, 56, 0.1);
         border-radius: 8px;
         padding: 36px 26px;
         text-align: center;
         cursor: pointer;
         transition:
-          transform 0.3s ease,
-          box-shadow 0.3s ease;
+          transform 0.35s ease,
+          box-shadow 0.35s ease;
       }
       .person:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 16px 30px rgba(94, 27, 42, 0.12);
+        transform: translateY(-8px) scale(1.015);
+        box-shadow: 0 20px 34px rgba(14, 54, 56, 0.14);
       }
       .person .ring {
         width: 84px;
@@ -309,14 +366,16 @@
         align-items: center;
         justify-content: center;
         background: var(--gold-soft);
-        color: var(--maroon-deep);
+        color: var(--teal-deep);
         font-family: "Cormorant Garamond", serif;
         font-size: 30px;
         font-weight: 600;
+        transition: transform 0.4s ease;
       }
+      .person:hover .ring { transform: rotate(8deg) scale(1.06); }
       .person h3 {
         font-size: 24px;
-        color: var(--maroon-deep);
+        color: var(--teal-deep);
         margin-bottom: 6px;
         font-weight: 500;
       }
@@ -329,7 +388,7 @@
       }
       .person p {
         font-size: 14px;
-        color: #5a4736;
+        color: #4a4a42;
         line-height: 1.7;
       }
 
@@ -341,7 +400,7 @@
       }
       .tcard {
         background: #fff;
-        border: 1px solid rgba(94, 27, 42, 0.12);
+        border: 1px solid rgba(14, 54, 56, 0.1);
         border-radius: 8px;
         padding: 30px 22px;
         text-align: center;
@@ -352,28 +411,31 @@
       }
       .tcard:hover {
         transform: translateY(-6px);
-        box-shadow: 0 16px 30px rgba(94, 27, 42, 0.12);
+        box-shadow: 0 16px 30px rgba(14, 54, 56, 0.14);
       }
       .tcard .icon {
         font-size: 26px;
         color: var(--gold);
         margin-bottom: 12px;
+        display: inline-block;
+        transition: transform 0.4s ease;
       }
+      .tcard:hover .icon { transform: rotate(18deg) scale(1.12); }
       .tcard h3 {
         font-size: 22px;
-        color: var(--maroon-deep);
+        color: var(--teal-deep);
         margin-bottom: 8px;
         font-weight: 500;
       }
       .tcard p {
         font-size: 14px;
-        color: #5a4736;
+        color: #4a4a42;
         line-height: 1.6;
       }
       .tcard .time {
         font-size: 12px;
         letter-spacing: 1px;
-        color: var(--maroon);
+        color: var(--teal-mid);
         text-transform: uppercase;
         margin-top: 10px;
         display: block;
@@ -383,7 +445,7 @@
         font-size: 12px;
         letter-spacing: 1px;
         text-transform: uppercase;
-        color: var(--maroon);
+        color: var(--teal-mid);
         border-bottom: 1px solid var(--gold);
         display: inline-block;
       }
@@ -394,7 +456,7 @@
 
       .venue-card {
         background: #fff;
-        border: 1px solid rgba(94, 27, 42, 0.12);
+        border: 1px solid rgba(14, 54, 56, 0.1);
         border-radius: 8px;
         padding: 0 0 34px;
         text-align: center;
@@ -408,7 +470,7 @@
       }
       .venue-card:hover {
         transform: translateY(-6px);
-        box-shadow: 0 16px 30px rgba(94, 27, 42, 0.12);
+        box-shadow: 0 18px 34px rgba(14, 54, 56, 0.14);
       }
       .venue-card .venue-photo {
         width: 100%;
@@ -416,7 +478,9 @@
         object-fit: cover;
         display: block;
         border-bottom: 3px solid var(--gold);
+        transition: transform 0.6s ease;
       }
+      .venue-card:hover .venue-photo { transform: scale(1.05); }
       .venue-card .venue-body {
         padding: 28px 30px 0;
       }
@@ -427,39 +491,43 @@
       }
       .venue-card h3 {
         font-size: 26px;
-        color: var(--maroon-deep);
+        color: var(--teal-deep);
         margin-bottom: 6px;
         font-weight: 500;
       }
       .venue-card p {
         font-size: 14px;
-        color: #5a4736;
+        color: #4a4a42;
         line-height: 1.7;
         margin-bottom: 18px;
       }
       .venue-card .go {
         display: inline-block;
-        background: var(--maroon-deep);
+        background: var(--teal-deep);
         color: var(--cream);
         padding: 11px 26px;
         border-radius: 20px;
         font-size: 12px;
         letter-spacing: 1.5px;
         text-transform: uppercase;
+        transition: background 0.3s ease, transform 0.3s ease;
       }
+      .venue-card:hover .go { background: var(--gold); color: var(--teal-deep); }
 
       footer {
         text-align: center;
         padding: 40px 20px 60px;
-        color: var(--maroon);
+        color: var(--teal-mid);
         font-size: 13px;
         letter-spacing: 1px;
       }
       footer .display {
         font-size: 20px;
-        color: var(--maroon-deep);
+        color: var(--teal-deep);
         margin-bottom: 6px;
       }
+      footer a { transition: transform 0.25s ease, color 0.25s ease; }
+      footer a:hover { transform: translateY(-2px); color: var(--gold); }
 
       @media (max-width: 760px) {
         .timeline {
@@ -485,6 +553,14 @@
           font-size: 10px;
         }
       }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+        }
+      }
     </style>
   </head>
   <body>
@@ -501,6 +577,11 @@
     </nav>
 
     <section class="hero" id="home">
+      <div class="wave-ring r1"></div>
+      <div class="wave-ring r2"></div>
+      <div class="wave-ring r3"></div>
+      <div id="particles"></div>
+
       <div class="lang-toggle">
         <button id="lang-en" onclick="setLanguage('en')" class="active">EN</button>
         <button id="lang-kn" onclick="setLanguage('kn')">ಕನ್ನಡ</button>
@@ -526,21 +607,21 @@
     </div>
 
     <section id="countdown">
-      <div class="label" data-i18n-en="Save the date" data-i18n-kn="ದಿನಾಂಕವನ್ನು ನೆನಪಿಡಿ">Save the date</div>
-      <h2 class="heading" data-i18n-en="Counting down to forever" data-i18n-kn="ಶಾಶ್ವತತೆಯೆಡೆಗೆ ಎಣಿಕೆ">Counting down to forever</h2>
+      <div class="label reveal" data-i18n-en="Save the date" data-i18n-kn="ದಿನಾಂಕವನ್ನು ನೆನಪಿಡಿ">Save the date</div>
+      <h2 class="heading reveal" data-i18n-en="Counting down to forever" data-i18n-kn="ಶಾಶ್ವತತೆಯೆಡೆಗೆ ಎಣಿಕೆ">Counting down to forever</h2>
       <div class="countdown">
-        <div class="cbox">
+        <div class="cbox reveal d1">
           <span class="num" id="cd-days">00</span><span class="unit" data-i18n-en="Days" data-i18n-kn="ದಿನಗಳು">Days</span>
         </div>
-        <div class="cbox">
+        <div class="cbox reveal d2">
           <span class="num" id="cd-hours">00</span
           ><span class="unit" data-i18n-en="Hours" data-i18n-kn="ಗಂಟೆಗಳು">Hours</span>
         </div>
-        <div class="cbox">
+        <div class="cbox reveal d3">
           <span class="num" id="cd-mins">00</span
           ><span class="unit" data-i18n-en="Minutes" data-i18n-kn="ನಿಮಿಷಗಳು">Minutes</span>
         </div>
-        <div class="cbox">
+        <div class="cbox reveal d4">
           <span class="num" id="cd-secs">00</span
           ><span class="unit" data-i18n-en="Seconds" data-i18n-kn="ಸೆಕೆಂಡುಗಳು">Seconds</span>
         </div>
@@ -557,11 +638,11 @@
     </div>
 
     <section id="couple">
-      <div class="label" data-i18n-en="Our story" data-i18n-kn="ನಮ್ಮ ಕಥೆ">Our story</div>
-      <h2 class="heading" data-i18n-en="The couple" data-i18n-kn="ದಂಪತಿಗಳು">The couple</h2>
+      <div class="label reveal" data-i18n-en="Our story" data-i18n-kn="ನಮ್ಮ ಕಥೆ">Our story</div>
+      <h2 class="heading reveal" data-i18n-en="The couple" data-i18n-kn="ದಂಪತಿಗಳು">The couple</h2>
       <div class="couple-grid">
         <div
-          class="person"
+          class="person reveal d1"
           onclick="
             sendPrompt('Tell me more about Manjula for the wedding invitation')
           "
@@ -575,7 +656,7 @@
           </p>
         </div>
         <div
-          class="person"
+          class="person reveal d2"
           onclick="
             sendPrompt(
               'Tell me more about Gourishankara for the wedding invitation',
@@ -603,13 +684,13 @@
     </div>
 
     <section id="events">
-      <div class="label" data-i18n-en="Event details" data-i18n-kn="ಕಾರ್ಯಕ್ರಮದ ವಿವರಗಳು">Event details</div>
-      <h2 class="heading" data-i18n-en="Where to be, and when" data-i18n-kn="ಎಲ್ಲಿ ಮತ್ತು ಯಾವಾಗ">Where to be, and when</h2>
+      <div class="label reveal" data-i18n-en="Event details" data-i18n-kn="ಕಾರ್ಯಕ್ರಮದ ವಿವರಗಳು">Event details</div>
+      <h2 class="heading reveal" data-i18n-en="Where to be, and when" data-i18n-kn="ಎಲ್ಲಿ ಮತ್ತು ಯಾವಾಗ">Where to be, and when</h2>
 
       <div class="timeline">
         <!-- Reception -->
         <div
-          class="tcard"
+          class="tcard reveal d1"
           onclick="
             window.open(
               'https://www.google.com/maps/search/?api=1&query=Blue+Ocean+Convention+Hall+Mysuru',
@@ -626,7 +707,7 @@
 
         <!-- Wedding Ceremony -->
         <div
-          class="tcard"
+          class="tcard reveal d2"
           onclick="
             window.open(
               'https://www.google.com/maps/search/?api=1&query=Blue+Ocean+Convention+Hall+Mysuru',
@@ -653,10 +734,10 @@
     </div>
 
     <section id="venue">
-      <div class="label" data-i18n-en="Main venue" data-i18n-kn="ಮುಖ್ಯ ಸ್ಥಳ">Main venue</div>
-      <h2 class="heading" data-i18n-en="Join us here" data-i18n-kn="ಇಲ್ಲಿ ನಮ್ಮೊಂದಿಗೆ ಸೇರಿ">Join us here</h2>
+      <div class="label reveal" data-i18n-en="Main venue" data-i18n-kn="ಮುಖ್ಯ ಸ್ಥಳ">Main venue</div>
+      <h2 class="heading reveal" data-i18n-en="Join us here" data-i18n-kn="ಇಲ್ಲಿ ನಮ್ಮೊಂದಿಗೆ ಸೇರಿ">Join us here</h2>
       <div
-        class="venue-card"
+        class="venue-card reveal"
         onclick="
           window.open(
             'https://www.google.com/maps/search/?api=1&query=Blue+Ocean+Conventional+Hall,+Varkood+Gate,+T+Narasipura+Main+Road,+Mysuru',
@@ -685,7 +766,7 @@
     <a
       href="tel:9071330429"
       style="
-        color: var(--maroon-deep);
+        color: var(--teal-deep);
         text-decoration: none;
         font-weight: 700;
         font-size: 14px;
@@ -696,7 +777,7 @@
     <a
       href="tel:6366646844"
       style="
-        color: var(--maroon-deep);
+        color: var(--teal-deep);
         text-decoration: none;
         font-weight: 700;
         font-size: 14px;
@@ -735,6 +816,8 @@
         document.querySelectorAll("nav button").forEach(function (btn) {
           btn.classList.toggle("active", btn.dataset.target === current);
         });
+
+        document.getElementById("nav").classList.toggle("scrolled", window.scrollY > 30);
       });
 
       var weddingDate = new Date("2026-07-04T18:30:00");
@@ -746,21 +829,21 @@
         var hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
         var mins = Math.floor((diff / (1000 * 60)) % 60);
         var secs = Math.floor((diff / 1000) % 60);
-        document.getElementById("cd-days").textContent = String(days).padStart(
-          2,
-          "0",
-        );
-        document.getElementById("cd-hours").textContent = String(
-          hours,
-        ).padStart(2, "0");
-        document.getElementById("cd-mins").textContent = String(mins).padStart(
-          2,
-          "0",
-        );
-        document.getElementById("cd-secs").textContent = String(secs).padStart(
-          2,
-          "0",
-        );
+
+        setNum("cd-days", days);
+        setNum("cd-hours", hours);
+        setNum("cd-mins", mins);
+        setNum("cd-secs", secs);
+      }
+      function setNum(id, value) {
+        var el = document.getElementById(id);
+        var text = String(value).padStart(2, "0");
+        if (el.textContent !== text) {
+          el.textContent = text;
+          el.classList.remove("tick");
+          void el.offsetWidth;
+          el.classList.add("tick");
+        }
       }
       updateCountdown();
       setInterval(updateCountdown, 1000);
@@ -773,6 +856,41 @@
         document.getElementById("lang-kn").classList.toggle("active", lang === "kn");
         document.documentElement.setAttribute("lang", lang);
       }
+
+      /* ---------- scroll reveal ---------- */
+      var revealEls = document.querySelectorAll(".reveal");
+      var io = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.15 },
+      );
+      revealEls.forEach(function (el) {
+        io.observe(el);
+      });
+
+      /* ---------- drifting particles in hero ---------- */
+      (function () {
+        var container = document.getElementById("particles");
+        var count = 18;
+        for (var i = 0; i < count; i++) {
+          var p = document.createElement("div");
+          p.className = "particle";
+          var size = 4 + Math.random() * 7;
+          p.style.width = size + "px";
+          p.style.height = size + "px";
+          p.style.left = Math.random() * 100 + "%";
+          p.style.setProperty("--drift-x", (Math.random() * 80 - 40) + "px");
+          p.style.animationDuration = 9 + Math.random() * 8 + "s";
+          p.style.animationDelay = Math.random() * 10 + "s";
+          container.appendChild(p);
+        }
+      })();
     </script>
   </body>
 </html>
